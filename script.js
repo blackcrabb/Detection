@@ -21,17 +21,7 @@ xmlhttp.onreadystatechange = function(){
 xmlhttp.open("GET", url, true);
 xmlhttp.send();
 
-// Initialize and add the map
-//function initMap() {
-  // The location of Uluru
- // var uluru = {lat: -25.344, lng: 131.036};
-  // The map, centered at Uluru
- // var map = new google.maps.Map(
-//      document.getElementById('map'), {zoom: 4, center: uluru});
-  // The marker, positioned at Uluru
- // var marker = new google.maps.Marker({position: uluru, map: map});
-//}
-
+//model
 function modelReady() {
   console.log('Model is ready!!!');
   classifier.load('model.json', customModelReady);
@@ -58,25 +48,6 @@ function setup() {
   mobilenet = ml5.featureExtractor('MobileNet', modelReady);
   classifier = mobilenet.classification(video, videoReady);
 
-  //maskonButton = createButton('Mask On');
-  //maskonButton.mousePressed(function() {
-  //  classifier.addImage('Mask On');
-  //});
-
-  //maskoffButton = createButton('Mask Off');
-  //maskoffButton.mousePressed(function() {
-  //  classifier.addImage('Mask Off');
-  //});
-
-  //trainButton = createButton('Train');
-  //trainButton.mousePressed(function() {
-  //  classifier.train(whileTraining);
-  //});
-
-  //saveButton = createButton('Save');
-  //saveButton.mousePressed(function() {
-  //  classifier.save();
-  //});
   }
 
 function draw() {
@@ -86,9 +57,7 @@ function draw() {
   scale(-1, 1);
   image(video, 0, 0, 600, 450);
   pop();  
-  //fill(255);
-  //textSize(16);
-  //text(label, 10, height - 10);
+ 
 
 select('#display_text').html(label)
 if(label == 'Mask On'){
@@ -104,21 +73,11 @@ else if(label == 'Mask Off'){
 }
 }
 
-/*function whileTraining(loss) {
-  if (loss == null) {
-    console.log('Training Complete');
-    classifier.classify(gotResults);
-  } else {
-    console.log(loss);
-  }
-}*/
 
 function gotResults(error, result) {
   if (error) {
     console.error(error);
   } else {
-    // updated to work with newer version of ml5
-    // label = result;
     label = result[0].label;
     classifier.classify(gotResults);
   }
